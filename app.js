@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");  
@@ -31,13 +32,24 @@ app.get("/listings", async(req, res) =>{
 });
 
 //Show Route 
-app.get("/listings/:id", async(res,req)=>{
-    let {id} = req.params;
-    const listing = await Listing.findById(id);
-    res.render("/listings/show.ejs", {listing});
-    });
+//app.get("/listings/:id", async(res,req)=>{
+  //  let {id} = req.params;
+   // const listing = await Listing.findById(id);
+   // res.render("/listings/show.ejs", {listing});
+   // });
 
-
+   app.get("/listings/:id", async (req, res) => {
+    try {
+        let { id } = req.params;
+        const listing = await Listing.findById(id);
+        if (!listing) {
+            return res.status(404).send("Listing not found");
+        }
+        res.render("listings/show", { listing });
+    } catch (err) {
+        res.status(500).send("Server error");
+    }
+});
 
 // app.get("/testListing",async (req,res) =>{
 // let sampleListing = new Listing({
