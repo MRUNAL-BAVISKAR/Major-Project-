@@ -1,2 +1,0 @@
-# Major-Project-
-AirBNB clone 
