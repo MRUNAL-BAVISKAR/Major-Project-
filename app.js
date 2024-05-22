@@ -1,7 +1,6 @@
-
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");  
+const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -60,33 +59,29 @@ app.post("/listings", async(req,res)=>{
    res.redirect("/listings");
    });
 
-   
+
 //Edit Route
 app.get("/listings/:id/edit",async (req, res) =>{
     let {id} = req.params;
 const listing = await Listing.findById(id);
 res.render("listings/edit.ejs", {listing});
-})
+});
 
 //Update Route
 app.put("/listings/:id", async(req,res) =>{
     let {id} = req.params;
-    Listing.findByIdAndUpdate(id, {...req.body.listing});
+   await Listing.findByIdAndUpdate(id, {...req.body.listing});
     res.redirect(`/listings/${id}`);
-})
+});
 
-// app.get("/testListing",async (req,res) =>{
-// let sampleListing = new Listing({
-//     title: "My house",
-//     description: "By the Beach",
-//     price: 1000,
-//     location: "Nagpur",
-//     country: "India",
-// });
-// await sampleListing.save();
-// console.log("sample was saved");
-// res.send("Succesful Testing");
-// });
+
+//Delete Route
+app.delete("/listings/:id", async(req, res)=>{
+    let {id} = req.params;
+    let deleteListing = await Listing.findByIdAndDelete(id);
+    console.log(deleteListing);
+    res.redirect("/listings");
+})
 
 app.listen(8080, () => {
 console.log("Server is here");
