@@ -31,13 +31,12 @@ app.get("/listings", async(req, res) =>{
    res.render("listings/index.ejs", {allListings});
 });
 
-//Show Route 
-//app.get("/listings/:id", async(res,req)=>{
-  //  let {id} = req.params;
-   // const listing = await Listing.findById(id);
-   // res.render("/listings/show.ejs", {listing});
-   // });
+app.get("/listings/new", (req, res) => {
+    res.render("listings/new.ejs");
+    });
 
+
+//Show Route 
    app.get("/listings/:id", async (req, res) => {
     try {
         let { id } = req.params;
@@ -50,6 +49,9 @@ app.get("/listings", async(req, res) =>{
         res.status(500).send("Server error");
     }
 });
+
+
+
 
 // app.get("/testListing",async (req,res) =>{
 // let sampleListing = new Listing({
